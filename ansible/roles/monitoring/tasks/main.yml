@@ -1,0 +1,6 @@
+---
+- name: Copy Prometheus config
+  copy:
+    src: "{{ playbook_dir }}/prometheus.yml"
+    dest: "{{ project_root }}/prometheus.yml"
+    mode: '0644'

@@ -1,0 +1,14 @@
+---
+- name: Deploy Study Tracker App
+  hosts: study-tracker-server
+  become: yes
+  vars:
+    project_root: /home/geekymusafir/ansible/study-tracker/deploy
+
+  roles:
+    - common
+    - docker
+    - backend
+    - frontend
+    - monitoring
+    - deployment

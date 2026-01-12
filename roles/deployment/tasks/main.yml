@@ -1,0 +1,22 @@
+- name: Create project directory
+  file:
+    path: "{{ project_root }}"
+    state: directory
+    mode: '0755'
+
+- name: Copy Docker Compose and Config files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ project_root }}/"
+    mode: '0644'
+  loop:
+    - docker-compose.yml
+    - nginx.conf
+
+- name: Deploy Stack using Docker Compose
+  shell: docker compose up -d --remove-orphans
+  args:
+    chdir: "{{ project_root }}"
+
+- name: Prune unused Docker images
+  shell: docker image prune -f

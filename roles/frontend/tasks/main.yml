@@ -1,0 +1,12 @@
+---
+- name: Create frontend directory
+  file:
+    path: "{{ project_root }}/frontend"
+    state: directory
+    mode: '0755'
+
+- name: Copy Frontend files
+  copy:
+    src: "{{ playbook_dir }}/frontend/"
+    dest: "{{ project_root }}/frontend/"
+    mode: '0755'

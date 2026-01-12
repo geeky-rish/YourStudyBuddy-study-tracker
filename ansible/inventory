@@ -1,0 +1,2 @@
+[study-tracker-server]
+localhost ansible_connection=local

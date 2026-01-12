@@ -1,0 +1,10 @@
+---
+- name: Create backend directory
+  file:
+    path: "{{ project_root }}/backend"
+    state: directory
+    mode: '0755'
+
+- name: Copy Backend files (excluding node_modules)
+  shell: |
+    rsync -av --exclude='node_modules' --exclude='.git' "{{ playbook_dir }}/../backend/" "{{ project_root }}/backend/"
