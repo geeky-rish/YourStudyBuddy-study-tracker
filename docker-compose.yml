@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb+srv://kavyauppin:0711@study-tracker.0rt4b59.mongodb.net/?appName=study-tracker
+      - PORT=5000
+      - JWT_SECRET=supersecretkey_change_this_in_production
+    networks:
+      - study-tracker-network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - study-tracker-network
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - study-tracker-network
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3001:3000"
+    networks:
+      - study-tracker-network
+
+networks:
+  study-tracker-network:
+    driver: bridge

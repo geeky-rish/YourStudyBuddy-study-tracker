@@ -11,6 +11,17 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Prometheus Metrics
+const client = require('prom-client');
+const collectDefaultMetrics = client.collectDefaultMetrics;
+collectDefaultMetrics({ register: client.register });
+
+app.get('/metrics', async (req, res) => {
+    res.setHeader('Content-Type', client.register.contentType);
+    const metrics = await client.register.metrics();
+    res.send(metrics);
+});
+
 const { errorHandler } = require('./middleware/errorMiddleware');
 
 // Database Connection
